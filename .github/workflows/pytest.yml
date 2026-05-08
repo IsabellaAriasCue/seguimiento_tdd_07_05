@@ -1,18 +1,27 @@
-name: Python TDD Pipeline
+name: Pipeline Suma TDD
 
 on: [push, pull_request]
 
 jobs:
-  test:
+
+  pruebas:
 
     runs-on: ubuntu-latest
 
     steps:
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
       - name: Instalar dependencias
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
 
-      - name: Ejecutar pruebas
-        run: python test_calculadora.py
+      - name: Ejecutar pruebas unitarias
+        run: |
+          pytest
